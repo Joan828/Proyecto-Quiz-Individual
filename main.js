@@ -3,36 +3,19 @@ const nextButton = document.getElementById("next-btn");
 const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
+let questions
+let good_answer = ""
+let bad_answers = ""
 
 // console.log(startButton,nextButton,questionContainerElement,questionElement,answerButtonsElement)
 
-const questions = [
-  {
-    question: "What is 2 + 2?",
-    answers: [
-      { text: "4", correct: false },
-      { text: "22", correct: false },
-      { text: "Both are correct", correct: true },
-    ],
-  },
-  {
-    question: "Is web development fun?",
-    answers: [
-      { text: "Kinda", correct: false },
-      { text: "YES!!!", correct: true },
-      { text: "Um no", correct: false },
-      { text: "IDK", correct: false },
-    ],
-  },
-  {
-    question: "What is 4 * 2?",
-    answers: [
-      { text: "6", correct: false }, //answer
-      { text: "8", correct: true },
-      { text: "Yes", correct: false },
-    ],
-  },
-];
+axios.get("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")  
+ .then((res) => {
+   questions = res.data.results
+   console.log(questions);
+   
+  })      
+ .catch((err) => console.error(err));
 
 let currentQuestionIndex;
 
