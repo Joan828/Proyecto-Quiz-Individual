@@ -4,10 +4,9 @@ const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 let questions
-let good_answer = ""
-let bad_answers = ""
-
-// console.log(startButton,nextButton,questionContainerElement,questionElement,answerButtonsElement)
+let score = 0
+let correctAnswer = ""
+let answers = []
 
 axios.get("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")  
  .then((res) => {
@@ -20,14 +19,19 @@ axios.get("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=
 let currentQuestionIndex;
 
 function startGame() {
+  answers = []
+  correctAnswer = ""
+  console.log("Answers:", answers);
+  
   startButton.classList.add("hide");
   currentQuestionIndex = 0;
   questionContainerElement.classList.remove("hide");
   setNextQuestion();
-}
+} 
 
 function setStatusClass(element) {
-  if (element.dataset.correct) {
+
+  if (element.getAttribute("questionType") == "correct") {
     element.classList.add("correct");
   } else {
     element.classList.add("wrong");
@@ -47,21 +51,23 @@ function selectAnswer() {
 }
 
 function showQuestion(question) {
-  //pinta la pregunta
+  //Pinta la pregunta
   questionElement.innerText = question.question;
-  //pintamos los botones de respuesta
-  question.answers.forEach((answer) => {
+  correctAnswer = question.correct_answer
+  answers = [...question.incorrect_answers]
+  answers.push(correctAnswer)
+  shuffle(answers)
+  answers.forEach((answer) => {
     const button = document.createElement("button");
-    button.innerText = answer.text;
-
-    //si el boton es la respuesta correcta le añadimos un atributo correct
-    if (answer.correct === true) {
-      button.dataset.correct = true;
+    button.innerText = answer
+    if(answer === correctAnswer){
+      button.setAttribute("questionType", "correct")
     }
-
     button.addEventListener("click", selectAnswer);
     answerButtonsElement.append(button);
-  });
+
+  })
+
 }
 
 function resetState() {
@@ -71,6 +77,7 @@ function resetState() {
 
 function setNextQuestion() {
     resetState()
+
   showQuestion(questions[currentQuestionIndex]);
 }
 
@@ -79,3 +86,7 @@ nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   setNextQuestion();
 });
+
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
