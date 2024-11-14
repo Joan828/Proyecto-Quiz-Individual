@@ -8,21 +8,16 @@ let score = 0
 let correctAnswer = ""
 let answers = []
 
-axios.get("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")  
+axios.get("https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple")  
  .then((res) => {
    questions = res.data.results
-   console.log(questions);
    
   })      
  .catch((err) => console.error(err));
 
 let currentQuestionIndex;
 
-function startGame() {
-  answers = []
-  correctAnswer = ""
-  console.log("Answers:", answers);
-  
+function startGame() { 
   startButton.classList.add("hide");
   currentQuestionIndex = 0;
   questionContainerElement.classList.remove("hide");
@@ -52,7 +47,7 @@ function selectAnswer() {
 
 function showQuestion(question) {
   //Pinta la pregunta
-  questionElement.innerText = question.question;
+  questionElement.innerHTML = "<div class=''>" + question.question + "</div>";
   correctAnswer = question.correct_answer
   answers = [...question.incorrect_answers]
   answers.push(correctAnswer)
@@ -76,8 +71,7 @@ function resetState() {
 }
 
 function setNextQuestion() {
-    resetState()
-
+  resetState()
   showQuestion(questions[currentQuestionIndex]);
 }
 
