@@ -27,3 +27,20 @@
   #question{
     font-size: 30px;
   }
+
+  #score{
+    font-size: 40px;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    background-color: rgb(68, 193, 239);
+    align-items: center;
+    margin: 20px;
+  }
+
+  #finalScore{
+    font-size: 40px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    align-items: center;
+    margin: 20px;
+  }
