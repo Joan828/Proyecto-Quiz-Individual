@@ -40,10 +40,8 @@ function setStatusClass(element) {
 }
 
 function selectAnswer(correctA) {
-  console.log(correctA);
   if(correctA == true){
     score++;
-    console.log(score);
     showScore()
     correctA = false;
   }
